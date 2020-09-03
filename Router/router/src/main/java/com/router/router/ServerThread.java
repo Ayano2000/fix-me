@@ -1,23 +1,25 @@
-package server;
+package com.router.router;
 
 import java.net.*;
 import java.io.*;
-import java.util.Random
+import java.util.*;
 
 public class ServerThread extends Thread {
-	private Socket socket = null;
-	static final ArrayList<String> marketIDs = new List<String>();
-	static final ArrayList<String> brokerIDs = new List<String>();
+	private Socket brokerSocket = null;
+	private Socket marketSocket = null;
+	static final ArrayList<String> marketIDs = new ArrayList<String>();
+	static final ArrayList<String> brokerIDs = new ArrayList<String>();
 
-	public ServerThread(Socket socket, String name) {
-		super(name);
-		this.socket = socket;
+	public ServerThread(Socket brokerSocket, Socket marketSocket) {
+		super("ServerThread");
+		this.brokerSocket = brokerSocket;
+		this.marketSocket = marketSocket;
 	}
 
 	public void run() {
 		try (
-				PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()), true);
+				PrintWriter output = new PrintWriter(brokerSocket.getOutputStream(), true);
+				BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
 				) {
 				// generate id : have seperate class?
 //			String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -27,21 +29,24 @@ public class ServerThread extends Thread {
 //				int randInt = random.nextInt(allowedChars.length());
 //				sb.append(allowedChars.charAt(randInt));
 //			}
-			marketIDs.add()
-			String request, response;
-			Market market = new Market(/*id*/);
-			Broker broker = new Broker(/*id*/);
-
 			/*
 			 * .getOrder(): return input.readLine()
 			 **/
-			while ((request = broker.getOrder()) != null) {
-				response = market.processOrder(request);
+			String request, response;
+			while ((request = input.readLine()) != null) {
+				response = "heard that!";
 				output.println(response);
-				if (response.equals("Exit"))
-						break;
+				if (request.equalsIgnoreCase("Exit"))
+					break;
 			}
-			socket.close();
+//			while ((request = broker.getOrder()) != null) {
+//				response = market.processOrder(request);
+//				output.println(response);
+//				if (response.equals("Exit"))
+//						break;
+//			}
+			brokerSocket.close();
+			marketSocket.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
