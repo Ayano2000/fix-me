@@ -1,6 +1,12 @@
 package server;
 
-public class KnockKnockProtocol {
+public class SocketManager {
+	
+	// this file should handle the two server ports and allow us
+	// to communicate with both of them independantly without
+	// having either or both of them close
+	
+	/*
 	private static final int waiting = 0;
 	private static final int sentknockknock = 1;
 	private static final int sentclue = 2;
@@ -47,41 +53,6 @@ public class KnockKnockProtocol {
 			}
 		}
 		return output;
-		// switch (state) {
-		// 	case waiting:
-		// 		output = "Knock! Knock!";
-		// 		state = sentknockknock;
-		// 		break;
-		// 	case sentknockknock:
-		// 		if (input.equalsIgnoreCase("who's there?") || input.equalsIgnoreCase("who's there")) {
-		// 			output = clues[currJoke];
-		// 			state = sentclue;
-		// 		} else {
-		// 			output = "No, now you say \"Who's there?\"";
-		// 		}
-		// 		break;
-		// 	case sentclue:
-		// 		if (input.equalsIgnoreCase(clues[currJoke]+" who?") || input.equalsIgnoreCase(clues[currJoke]+" who")) {
-		// 			output = punchlines[currJoke] + "\n Want another? (y/n)";
-		// 			state = another;
-		// 		} else {
-		// 			output = "No, you're supposed to say "+clues[currJoke]+" who?";
-		// 		}
-		// 		break;
-		// 	case another:
-		// 		if (input.equalsIgnoreCase("y")) {
-		// 			output = "Knock! Knock!";
-		// 			if (currJoke == (numjokes - 1))
-		// 				currJoke = 0;
-		// 			else
-		// 				currJoke++;
-		// 			state = sentknockknock;
-		// 		} else {
-		// 			output = "Ok, well, bye.";
-		// 			state = waiting;
-		// 		}
-		// 		break;
-		// 	}
-		// return output;
 	}
+	*/
 }
