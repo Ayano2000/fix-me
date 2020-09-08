@@ -17,12 +17,9 @@ public class Market {
     public static void main(String[] args) {
         Instruments instrumentManager = new Instruments();
         Brokers brokerManager = new Brokers();
-        // instruments are our dildos, wanna make the same one for the brokers
+
         List<Instrument> instruments = instrumentManager.getInstruments();
         List<Broker> brokers = brokerManager.getBrokerList();
-        // brokers needs some work but will come back to it.
-        // need to figure out how to keep track of the brokers stock
-        // but we can keep track of the brokers and the instruments like this.
 
         // now to handle the communication with the market
         try (Socket socket = new Socket("localhost", 5001)) {
@@ -30,10 +27,10 @@ public class Market {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
 
-            String received = reader.readLine();
+            String received;
             String toSend;
 
-            while (!received.equalsIgnoreCase("Exit"))
+            while (!(received = reader.readLine()).equalsIgnoreCase("Exit"))
             {
                 System.out.println(received);
 //                if (/*order is buy */true) {}
