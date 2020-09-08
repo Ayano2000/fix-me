@@ -1,50 +1,40 @@
-package server;
+package com.router.router;
 
 import java.net.*;
 import java.io.*;
-import java.util.Random
+import java.util.*;
 
 public class ServerThread extends Thread {
-	private Socket socket = null;
-	static final ArrayList<String> marketIDs = new List<String>();
-	static final ArrayList<String> brokerIDs = new List<String>();
+	protected Socket brokerSocket = null;
+	static final ArrayList<String> marketIDs = new ArrayList<String>();
+	static final ArrayList<String> brokerIDs = new ArrayList<String>();
 
-	public ServerThread(Socket socket, String name) {
-		super(name);
-		this.socket = socket;
+	public ServerThread(Socket brokerSocket) {
+		System.out.println("port" + brokerSocket.getPort());
+		this.brokerSocket = brokerSocket;
 	}
 
 	public void run() {
-		try (
-				PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()), true);
-				) {
-				// generate id : have seperate class?
-//			String allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-//			StringBuilder sb = new StringBuilder(6);
-//			Random random = new Random();
-//			for (int i = 0; i < 6; i++) {
-//				int randInt = random.nextInt(allowedChars.length());
-//				sb.append(allowedChars.charAt(randInt));
-//			}
-			marketIDs.add()
+		try {
+			PrintWriter output = new PrintWriter(brokerSocket.getOutputStream(), true);
+			BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
 			String request, response;
-			Market market = new Market(/*id*/);
-			Broker broker = new Broker(/*id*/);
-
-			/*
-			 * .getOrder(): return input.readLine()
-			 **/
-			while ((request = broker.getOrder()) != null) {
-				response = market.processOrder(request);
-				output.println(response);
-				if (response.equals("Exit"))
+			while (true) {
+				try {
+					request = input.readLine();
+					if (request.equalsIgnoreCase("Exit"))
 						break;
+					else
+						System.out.println(request);
+					output.println(request);
+				} catch (IOException e) {
+					throw e;
+				}
 			}
-			socket.close();
-
+			brokerSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return;
 		}
 	}
 }
