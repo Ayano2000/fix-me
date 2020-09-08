@@ -5,11 +5,11 @@ import java.io.*;
 import java.util.*;
 
 public class ServerThread extends Thread {
-	private Socket brokerSocket = null;
+	protected Socket brokerSocket = null;
 	static final ArrayList<String> marketIDs = new ArrayList<String>();
 	static final ArrayList<String> brokerIDs = new ArrayList<String>();
 
-	ServerThread(Socket brokerSocket/*, Socket marketSocket*/) {
+	public ServerThread(Socket brokerSocket) {
 		System.out.println("port" + brokerSocket.getPort());
 		this.brokerSocket = brokerSocket;
 	}
@@ -20,14 +20,21 @@ public class ServerThread extends Thread {
 			BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
 			String request, response;
 			while (true) {
-				request = input.readLine();
-				if (request.equalsIgnoreCase("Exit"))
-					break;
-				output.println(request);
+				try {
+					request = input.readLine();
+					if (request.equalsIgnoreCase("Exit"))
+						break;
+					else
+						System.out.println(request);
+					output.println(request);
+				} catch (IOException e) {
+					throw e;
+				}
 			}
 			brokerSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return;
 		}
 	}
 }

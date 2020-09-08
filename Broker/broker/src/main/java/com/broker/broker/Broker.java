@@ -14,16 +14,17 @@ public class Broker {
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			String fromRouter, fromBroker;
 			System.out.println("Your order, please: ");
-			fromBroker = stdIn.readLine();
-			System.out.println("you said: "+ fromBroker);
-			output.println(fromBroker);
-			while ((fromRouter = input.readLine()) != null) {
-				System.out.println("Router: "+fromRouter);
-				if (fromRouter.equals("Exit"))
-					break;
+			fromBroker = "";
+//			System.out.println("you said: "+ fromBroker);
+//			output.println(fromBroker);
+			while (input.readLine() != null) {
+//				fromRouter = input.readLine();
 				fromBroker = stdIn.readLine();
-				if (fromBroker != null) {
-					System.out.println("Broker: "+fromRouter);
+				System.out.println("Broker: "+fromBroker);
+//				if (fromBroker.equals("Exit"))
+//					break;
+				if (fromBroker.length() > 0) {
+					System.out.println("printing to output stream");
 					output.println(fromBroker);
 				}
 			}
