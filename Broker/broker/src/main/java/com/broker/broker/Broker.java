@@ -6,18 +6,18 @@ import java.io.*;
 public class Broker {
 
 	public static void main(String[] args) throws InterruptedException {
-		try (
+		try {
 			Socket brokerSocket = new Socket("localhost", 5000);
 			PrintWriter output = new PrintWriter(brokerSocket.getOutputStream(), true);
 			BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
-		) {
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			String fromRouter, fromBroker;
+
 			System.out.println("Your order, please: ");
 			fromBroker = "";
 //			System.out.println("you said: "+ fromBroker);
 //			output.println(fromBroker);
-			while (input.readLine() != null) {
+			while (!fromBroker.equalsIgnoreCase("exit")) {
 //				fromRouter = input.readLine();
 				fromBroker = stdIn.readLine();
 				System.out.println("Broker: "+fromBroker);

@@ -32,9 +32,10 @@ public class Market {
 
             while (!(received = reader.readLine()).equalsIgnoreCase("Exit"))
             {
+                received = reader.readLine();
                 System.out.println(received);
-//                if (/*order is buy */true) {}
-//                if (/*order is sell */true) {}
+                if (/*order is buy */true) {}
+                if (/*order is sell */true) {}
             }
 
         } catch (UnknownHostException e) {
