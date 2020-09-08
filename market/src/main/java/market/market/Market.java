@@ -28,14 +28,16 @@ public class Market {
         try (Socket socket = new Socket("localhost", 5001)) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
 
             String received = reader.readLine();
             String toSend;
 
             while (!received.equalsIgnoreCase("Exit"))
             {
-                if (/*order is buy */true) {}
-                if (/*order is sell */true) {}
+                System.out.println(received);
+//                if (/*order is buy */true) {}
+//                if (/*order is sell */true) {}
             }
 
         } catch (UnknownHostException e) {
