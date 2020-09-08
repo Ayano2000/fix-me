@@ -27,6 +27,7 @@ public class ServerThread extends Thread {
 			 */
 			output.println("helloyesthisisid");
 			String request, response;
+			// TODO: fix nullPointerException when broker dies
 			while (true) {
 				try {
 					request = input.readLine();
