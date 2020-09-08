@@ -34,6 +34,8 @@ public class Market {
 
             while (!received.equalsIgnoreCase("Exit"))
             {
+                received = reader.readLine();
+                System.out.println(received);
                 if (/*order is buy */true) {}
                 if (/*order is sell */true) {}
             }
