@@ -17,8 +17,8 @@ public class Router {
 			Socket marketClientSocket = marketSocket.accept();
 		) {
 			// infinitely listens for connections on port 5000, creating new ServerThread for each connection
-			while (listening) {
-				new ServerThread(brokerSocket.accept(), marketClientSocket).start();
+			while (true) {
+				new ServerThread(brokerSocket.accept()/*, marketClientSocket*/).start();
 			}
 		} catch (IOException e) {
 			System.out.println(e);
