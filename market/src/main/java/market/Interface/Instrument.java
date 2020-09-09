@@ -1,4 +1,4 @@
-package Interface;
+package main.java.market.Interface;
 
 public interface Instrument
 {

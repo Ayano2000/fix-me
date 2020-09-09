@@ -1,4 +1,4 @@
-package model.instruments;
+package main.java.market.model.instruments;
 
 public class Dildo {
 

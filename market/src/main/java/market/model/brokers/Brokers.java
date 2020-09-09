@@ -1,6 +1,4 @@
-package model.brokers;
-
-import Interface.Instrument;
+package main.java.market.model.brokers;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

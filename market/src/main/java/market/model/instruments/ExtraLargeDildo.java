@@ -1,7 +1,6 @@
-package model.instruments;
+package main.java.market.model.instruments;
 
-import Interface.Instrument;
-import model.instruments.Dildo;
+import main.java.market.Interface.Instrument;
 
 public class ExtraLargeDildo extends Dildo implements Instrument
 {
