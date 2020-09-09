@@ -19,8 +19,8 @@ public class Router {
 					if (marketClientSocket == null) {
 						System.out.println("Waiting for Market to connect...");
 						marketClientSocket = marketSocket.accept();
+						System.out.println("The Market is now open for business...");
 					}
-					System.out.println("gon do this shit now");
 					new ServerThread(brokerSocket.accept(), marketClientSocket).start();
 				} catch (IOException e) {
 					throw e;
