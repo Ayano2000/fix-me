@@ -86,8 +86,35 @@ public class MarketModel
             }
         }
         return false; // broker doesn't exist
-
     }
+
+    public boolean purchaseStock(String productID, String brokerID, int amount)
+    {
+        addBroker(brokerID);
+        if (checkIfInstrumentExists(productID) == false) {
+            return false;
+        }
+        else if (checkBrokerBalanceForPurchase(productID, brokerID, amount) == false){
+            return false;
+        }
+        else if (checkInstrumentAvailableStock(productID, amount) == false) {
+            return false;
+        }
+        for (Broker broker : brokers) {
+            if ((broker.getID()).equals(brokerID)) {
+                for (Instrument instrument : instruments) {
+                    if ((instrument.getProductID().equals(productID))) {
+                            instrument.setAmountAvailable(instrument.getAmountAvailable() - amount);
+                            broker.setBalance(broker.getBalance() - (instrument.getPrice() * amount));
+                            broker.addStock(productID, amount);
+                            return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 
     // only adds if broker does not exist
     private void addBroker(String id)
@@ -103,7 +130,11 @@ public class MarketModel
 
     private boolean checkIfInstrumentExists(String id)
     {
-        // todo - message
+        for (Instrument instrument : instruments) {
+            if ((instrument.getProductID()).equals(id)) {
+                return true;
+            }
+        }
         return false;
     }
 }
