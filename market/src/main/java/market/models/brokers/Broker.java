@@ -1,6 +1,9 @@
-package main.java.market.model.brokers;
+package main.java.market.models.brokers;
 
-import main.java.market.Interface.BrokerInterface;
+import main.java.market.interfaces.BrokerInterface;
+
+import java.util.Arrays;
+import java.util.StringJoiner;
 
 public class Broker implements BrokerInterface
 {
@@ -18,17 +21,27 @@ public class Broker implements BrokerInterface
         stock[0][0] = "XSD01";
         stock[0][1] = "0";
 
-        stock[0][0] = "RSD01";
-        stock[0][1] = "0";
+        stock[1][0] = "RSD01";
+        stock[1][1] = "0";
 
-        stock[0][0] = "RMD01";
-        stock[0][1] = "0";
+        stock[2][0] = "RMD01";
+        stock[2][1] = "0";
 
-        stock[0][0] = "RLD01";
-        stock[0][1] = "0";
+        stock[3][0] = "RLD01";
+        stock[3][1] = "0";
 
-        stock[0][0] = "XLD01";
-        stock[0][1] = "0";
+        stock[4][0] = "XLD01";
+        stock[4][1] = "0";
+    }
+
+    @Override
+    public String toString() {
+        StringJoiner sj = new StringJoiner(System.lineSeparator());
+        for (String[] row : stock) {
+            sj.add(Arrays.toString(row));
+        }
+        String result = sj.toString();
+        return "ID: " + ID + " Balance: " + balance + " Stock: " + result;
     }
 
     public String getID() {

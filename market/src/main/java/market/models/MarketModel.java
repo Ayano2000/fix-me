@@ -1,30 +1,18 @@
-package main.java.market.model;
+package main.java.market.models;
 
-import main.java.market.Interface.Instrument;
-import main.java.market.model.brokers.Broker;
-import main.java.market.model.brokers.Brokers;
-import main.java.market.model.instruments.Instruments;
+import main.java.market.interfaces.Instrument;
+import main.java.market.models.brokers.Broker;
 
 import java.util.List;
 
 public class MarketModel
 {
-    private Instruments instrumentManager = new Instruments();
-    private Brokers brokerManager = new Brokers();
+    private List<Instrument> instruments = null;
+    private List<Broker> brokers = null;
 
-    private List<Instrument> instruments = instrumentManager.getInstruments();
-    private List<Broker> brokers = brokerManager.getBrokerList();
-
-    public MarketModel() {
-//        for (Instrument instrument : instruments) {
-//            System.out.println(instrument.toString());
-//        }
-//        brokers.add(new Broker("ARATA", 1200));
-//        brokers.add(new Broker("RIGARDT", 1200));
-//        brokers.add(new Broker("CARAH", 1200));
-//        for (Broker broker : brokers) {
-//            System.out.println(broker.toString());
-//        }
+    public MarketModel(List<Instrument> instrumentList, List<Broker> brokerList) {
+        instruments = instrumentList;
+        brokers = brokerList;
     }
 
     public boolean checkInstrumentAvailableStock(String id, int amount)

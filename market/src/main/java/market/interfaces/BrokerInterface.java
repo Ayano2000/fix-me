@@ -1,4 +1,4 @@
-package main.java.market.Interface;
+package main.java.market.interfaces;
 
 public interface BrokerInterface
 {
