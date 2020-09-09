@@ -44,7 +44,7 @@ public class MarketModel
 
     public boolean checkBrokerBalanceForPurchase(String productID, String brokerID, int amount)
     {
-        addBroker(brokerID); // only adds if broker does not exist
+        addBroker(brokerID);
         for (Broker broker : brokers) {
             if ((broker.getID()).equals(brokerID)) {
                 for (Instrument instrument : instruments) {
@@ -65,6 +65,8 @@ public class MarketModel
 
     public boolean sellBrokerStock(String productID, String brokerID, int amount)
     {
+        addBroker(brokerID);
+
         if (amount < 1) {
             return false;
         }
@@ -73,10 +75,11 @@ public class MarketModel
                 if (broker.getStockBalance(productID) < amount) {
                     return false; // broker does now own enough stock to sell this much
                 } else {
-                    broker.removeStock(productID, amount);
                     for (Instrument instrument : instruments) {
                         if ((instrument.getProductID()).equals(productID)) {
+                            broker.removeStock(productID, amount);
                             broker.setBalance(broker.getBalance() + (instrument.getPrice() * amount));
+                            instrument.setAmountAvailable(instrument.getAmountAvailable() + amount);
                         }
                     }
                 }
@@ -86,6 +89,7 @@ public class MarketModel
 
     }
 
+    // only adds if broker does not exist
     private void addBroker(String id)
     {
         for (Broker broker : brokers) {
@@ -99,7 +103,7 @@ public class MarketModel
 
     private boolean checkIfInstrumentExists(String id)
     {
-        // todo
+        // todo - message
         return false;
     }
 }
