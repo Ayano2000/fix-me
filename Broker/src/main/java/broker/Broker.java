@@ -15,22 +15,24 @@ public class Broker {
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 			String fromRouter, fromBroker;
 
-			System.out.println("Your order, please: ");
+			System.out.println("Your order, please: \nExpected format: <buy/sell> <instrument> <amount>");
 			fromBroker = "";
 			id = input.readLine();
-			System.out.println("connected. id ==  "+ id);
-//			output.println(fromBroker);
 			while (!fromBroker.equalsIgnoreCase("exit")) {
-				fromBroker = stdIn.readLine();
-				if (fromBroker.length() > 0) {
-					System.out.println("printing to output stream");
-					output.println(id + ": "+fromBroker);
+				try {
+					fromBroker = stdIn.readLine();
+					if (fromBroker.length() > 0) {
+						output.println(fromBroker);
+					}
+					fromRouter = input.readLine();
+					if (fromRouter.length() > 0) {
+						System.out.println("Router: "+fromRouter);
+					}
+				} catch (IOException e) {
+					throw e;
 				}
-				fromRouter = input.readLine();
-				System.out.println("Router: "+fromRouter);
 			}
 		} catch (IOException e) {
-
 			System.out.println("Oops, something bad happened: "+e);
 			System.exit(1);
 		}
