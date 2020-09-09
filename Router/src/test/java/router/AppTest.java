@@ -1,4 +1,4 @@
-package com.router.router;
+package test.java.router;
 
 import static org.junit.Assert.assertTrue;
 
