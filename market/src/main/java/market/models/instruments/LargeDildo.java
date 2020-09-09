@@ -1,15 +1,10 @@
-package main.java.market.model.instruments;
+package main.java.market.models.instruments;
 
 
-import main.java.market.Interface.Instrument;
+import main.java.market.interfaces.Instrument;
 
 public class LargeDildo extends Dildo implements Instrument
 {
-    private String productID;
-    private String size;
-    private int price;
-    private int amountAvailable;
-
     public LargeDildo()
     {
         // RLD = regular large dildo, 01 = default
@@ -18,45 +13,57 @@ public class LargeDildo extends Dildo implements Instrument
         this.size = "Large";
         this.price = 900;
         this.amountAvailable = 20;
+        this.acceptedValues.add("large");
+        this.acceptedValues.add("l");
     }
 
     public String getProductID()
     {
-        return productID;
+        return this.productID;
     }
 
     public String getSize()
     {
-        return size;
+        return this.size;
     }
 
     public int getAmountAvailable()
     {
-        return amountAvailable;
+        return this.amountAvailable;
     }
 
     public int getPrice()
     {
-        return price;
+        return this.price;
     }
 
     public void setProductID(String value)
     {
-        productID = value;
+        this.productID = value;
     }
 
     public void setSize(String value)
     {
-        size = value;
+        this.size = value;
     }
 
     public void setAmountAvailable(int value)
     {
-        amountAvailable = value;
+        this.amountAvailable = value;
     }
 
     public void setPrice(int value)
     {
-        price = value;
+        this.price = value;
+    }
+
+    public boolean checkAlias(String request)
+    {
+        for (String alias : this.acceptedValues) {
+            if (alias.equalsIgnoreCase(request)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

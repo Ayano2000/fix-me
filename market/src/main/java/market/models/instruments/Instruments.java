@@ -1,7 +1,7 @@
-package main.java.market.model.instruments;
+package main.java.market.models.instruments;
 
 
-import main.java.market.Interface.Instrument;
+import main.java.market.interfaces.Instrument;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

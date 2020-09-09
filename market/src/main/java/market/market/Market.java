@@ -1,11 +1,12 @@
 package main.java.market.market;
 
-import main.java.market.model.MarketModel;
+import main.java.market.controllers.MarketController;
 
 public class Market {
     public static void main(String[] args) {
         // now to handle the communication with the market
-        MarketModel marketModel = new MarketModel();
+        MarketController marketController = new MarketController();
+
 //        try (Socket socket = new Socket("localhost", 5001)) {
 //            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 //            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
@@ -14,12 +15,12 @@ public class Market {
 //            String received;
 //            String toSend;
 //
-//            while (!(received = reader.readLine()).equalsIgnoreCase("Exit"))
+//            while (true)
 //            {
 //                received = reader.readLine();
 //                System.out.println(received);
-//                if (/*order is buy */true) {}
-//                if (/*order is sell */true) {}
+//                // todo
+////                toSend = marketController.evaluate();
 //            }
 //
 //        } catch (UnknownHostException e) {

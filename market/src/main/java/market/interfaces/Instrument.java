@@ -1,14 +1,15 @@
-package main.java.market.Interface;
+package main.java.market.interfaces;
 
 public interface Instrument
 {
-    // setters
+    // getters
     String getProductID();
     String getSize();
     int getAmountAvailable();
     int getPrice();
+    boolean checkAlias(String request);
 
-    // Getters
+    // setters
     void setAmountAvailable(int value);
     void setPrice(int value);
     void setProductID(String value);
