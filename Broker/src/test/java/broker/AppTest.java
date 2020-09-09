@@ -1,4 +1,4 @@
-package com.broker.broker;
+package test.java.broker;
 
 import static org.junit.Assert.assertTrue;
 
