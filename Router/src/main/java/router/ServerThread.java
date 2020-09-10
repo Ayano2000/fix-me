@@ -31,15 +31,21 @@ public class ServerThread extends Thread {
 			while (true) {
 				try {
 					request = brokerIn.readLine();
-					if (request.equalsIgnoreCase("Exit"))
+					if (request.length() > 0) {
+						if (request.equalsIgnoreCase("Exit"))
+							break;
+						if (messageHandler.validate(request)) {
+							String parsedMessage = messageHandler.parse(request, brokerID);
+							System.out.println(parsedMessage);
+							marketOut.println(parsedMessage);
+							response = marketIn.readLine();
+							brokerOut.println(response);
+						}
+						else
+							brokerOut.println("Please format your message properly and try again.");
+					} else {
 						break;
-					if (messageHandler.validate(request)) {
-						marketOut.println(messageHandler.parse(request, brokerID));
-						response = marketIn.readLine();
-						brokerOut.println(response);
 					}
-					else
-						brokerOut.println("Please format your message properly and try again.");
 				} catch (IOException | NullPointerException e) {
 					throw e;
 				}

@@ -36,9 +36,17 @@ public class MessageHandler {
                     Integer.parseInt(msgPieces[2]);
                     return true;
                 } catch (NumberFormatException e) {
-                    System.out.println("Something went wrong: "+e);
+                    System.out.println("Please format your message properly and try again.");
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean validateMarketMessage(String message) {
+        String[] msgPieces = message.split("\\|");
+        if (msgPieces.length == 5) {
+            // TODO: validate msg based on checksum
         }
         return false;
     }
