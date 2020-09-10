@@ -18,21 +18,23 @@ public class Broker {
 			System.out.println("Your order, please: \nExpected format: <buy/sell> <instrument> <amount>");
 			fromBroker = "";
 			id = input.readLine();
-			while (!fromBroker.equalsIgnoreCase("exit")) {
+			while (true) {
 				try {
 					fromBroker = stdIn.readLine();
 					if (fromBroker.length() > 0) {
+						if (fromBroker.equalsIgnoreCase("exit"))
+							break;
 						output.println(fromBroker);
 					}
 					fromRouter = input.readLine();
 					if (fromRouter.length() > 0) {
 						System.out.println("Router: "+fromRouter);
 					}
-				} catch (IOException e) {
+				} catch (IOException | NullPointerException e) {
 					throw e;
 				}
 			}
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			System.out.println("Oops, something bad happened: "+e);
 			System.exit(1);
 		}
