@@ -27,11 +27,9 @@ public class ServerThread extends Thread {
 			brokerID = generateId();
 			brokerOut.println(brokerID);
 			String request, response;
-			// TODO: fix nullPointerException when broker dies
-			while (true) {
+			while (brokerSocket.isConnected()) {
 				try {
-					request = brokerIn.readLine();
-					if (request.length() > 0) {
+					if ((request = brokerIn.readLine()).length() > 0) {
 						if (request.equalsIgnoreCase("Exit"))
 							break;
 						if (messageHandler.validate(request)) {
@@ -53,7 +51,7 @@ public class ServerThread extends Thread {
 			brokerSocket.close();
 			marketSocket.close();
 		} catch (IOException | NullPointerException e) {
-			e.printStackTrace();
+			System.out.println("Broker "+brokerID+" logged off");
 		}
 	}
 
