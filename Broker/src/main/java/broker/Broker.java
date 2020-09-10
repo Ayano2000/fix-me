@@ -8,15 +8,14 @@ public class Broker {
 	private static String id;
 
 	public static void main(String[] args) throws InterruptedException {
-		try {
-			Socket brokerSocket = new Socket("localhost", 5000);
-			PrintWriter output = new PrintWriter(brokerSocket.getOutputStream(), true);
-			BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
-			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-			String fromRouter, fromBroker;
+		try (Socket brokerSocket = new Socket("localhost", 5000);
+				PrintWriter output = new PrintWriter(brokerSocket.getOutputStream(), true);
+				BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
+				BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+				) {
 
+			String fromRouter, fromBroker;
 			System.out.println("Your order, please: \nExpected format: <buy/sell> <instrument> <amount>");
-			fromBroker = "";
 			id = input.readLine();
 			while (true) {
 				try {
