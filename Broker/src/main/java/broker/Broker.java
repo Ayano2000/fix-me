@@ -7,7 +7,7 @@ public class Broker {
 
 	private static String id;
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) {
 		try (Socket brokerSocket = new Socket("localhost", 5000);
 				PrintWriter output = new PrintWriter(brokerSocket.getOutputStream(), true);
 				BufferedReader input = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
@@ -26,16 +26,17 @@ public class Broker {
 						output.println(fromBroker);
 					}
 					fromRouter = input.readLine();
-					if (fromRouter.length() > 0) {
-						System.out.println("Router: "+fromRouter);
-					}
+					if (fromRouter != null)
+						if (fromRouter.length() > 0)
+							System.out.println("Router: "+fromRouter);
 				} catch (IOException | NullPointerException e) {
 					throw e;
 				}
 			}
 		} catch (IOException | NullPointerException e) {
-			System.out.println("Oops, something bad happened: "+e);
-			System.exit(1);
+			System.out.println("Oops, something bad happened: ");
+			e.printStackTrace();
+//			System.exit(1);
 		}
 
 	}
