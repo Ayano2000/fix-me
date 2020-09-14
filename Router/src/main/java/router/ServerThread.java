@@ -43,7 +43,6 @@ public class ServerThread extends Thread {
 			this.interrupt();
 //			marketSocket.close();
 		} catch (IOException | NullPointerException e) {
-			e.printStackTrace();
 			System.out.println("Broker "+brokerID+" logged off");
 			this.interrupt();
 		}
