@@ -19,7 +19,7 @@ public class Router {
 					if (marketClientSocket == null) {
 						System.out.println("Waiting for Market to connect...");
 						marketClientSocket = marketSocket.accept();
-						new PrintWriter(marketClientSocket.getOutputStream(), true).println(marketClientSocket.getPort());
+						new PrintWriter(marketClientSocket.getOutputStream(), true).println("M"+marketClientSocket.getPort());
 						System.out.println("The Market is now open for business...");
 					}
 					new ServerThread(brokerSocket.accept(), marketClientSocket).start();
