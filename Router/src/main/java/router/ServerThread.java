@@ -28,20 +28,18 @@ public class ServerThread extends Thread {
 			String request, response;
 			while (true) {
 				request = brokerIn.readLine();
+//				request = request.replaceFirst("buy", "sell"); // when want to test checksum validation
 				if (request.equalsIgnoreCase("Exit"))
 					break;
-				if (messageHandler.validate(request)) {
-					String parsedMessage = messageHandler.parse(request, brokerID);
-					System.out.println(parsedMessage);
-					marketOut.println(parsedMessage);
+				if (messageHandler.validateChecksum(request)) {
+					marketOut.println(request);
 					response = marketIn.readLine();
 					brokerOut.println(response);
 				} else
-					brokerOut.println("Please format your message properly and try again.");
+					brokerOut.println("Something went wrong while processing your order...");
 			}
 			brokerSocket.close();
 			this.interrupt();
-//			marketSocket.close();
 		} catch (IOException | NullPointerException e) {
 			System.out.println("Broker "+brokerID+" logged off");
 			this.interrupt();
