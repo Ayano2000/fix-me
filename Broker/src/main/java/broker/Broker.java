@@ -20,15 +20,17 @@ public class Broker {
 			while (true) {
 				try {
 					fromBroker = stdIn.readLine();
-					if (fromBroker.length() > 0) {
-						if (fromBroker.equalsIgnoreCase("exit"))
-							break;
-						output.println(fromBroker);
+					if (fromBroker.equalsIgnoreCase("exit"))
+						break;
+					if (validateInput(fromBroker)) {
+						output.println(parseMessage(fromBroker));
+						fromRouter = input.readLine();
+						if (fromRouter != null)
+							if (fromRouter.length() > 0)
+								System.out.println("Router: "+fromRouter);
+					} else {
+						System.out.println("Please check the format of your order and try again...");
 					}
-					fromRouter = input.readLine();
-					if (fromRouter != null)
-						if (fromRouter.length() > 0)
-							System.out.println("Router: "+fromRouter);
 				} catch (IOException | NullPointerException e) {
 					throw e;
 				}
@@ -36,8 +38,34 @@ public class Broker {
 		} catch (IOException | NullPointerException e) {
 			System.out.println("Oops, something bad happened: ");
 			e.printStackTrace();
-//			System.exit(1);
 		}
+	}
 
+	private static String parseMessage(String message) {
+		String parsedMessage = id;
+		int checksum = 0;
+		parsedMessage += "|"+message.replaceAll(" ", "|");
+		for (int i = 0; i < parsedMessage.length(); i++) {
+			int temp = (int) (Math.floor(Math.log(parsedMessage.charAt(i)) / Math.log(2))) + 1;
+			checksum += ((1 << temp) - 1) ^ parsedMessage.charAt(i);
+		}
+		parsedMessage += "|"+checksum;
+		return parsedMessage;
+	}
+
+	private static boolean validateInput(String message) {
+		String[] msgPieces = message.split(" ");
+		if (msgPieces.length == 3) {
+			if ((msgPieces[0].equalsIgnoreCase("buy") || msgPieces[0].equalsIgnoreCase("sell"))
+					&& msgPieces[1].length() > 0 && msgPieces[2].length() > 0) {
+				try {
+					Integer.parseInt(msgPieces[2]);
+					return true;
+				} catch (NumberFormatException e) {
+					System.out.println("Please format your message properly and try again.");
+				}
+			}
+		}
+		return false;
 	}
 }
