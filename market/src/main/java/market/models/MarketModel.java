@@ -68,6 +68,7 @@ public class MarketModel
                             broker.removeStock(productID, amount);
                             broker.setBalance(broker.getBalance() + (instrument.getPrice() * amount));
                             instrument.setAmountAvailable(instrument.getAmountAvailable() + amount);
+                            return true;
                         }
                     }
                 }

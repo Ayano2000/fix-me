@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Market {
+    private static String id;
+
     public static void main(String[] args) {
 //         now to handle the communication with the market
          MarketController marketController = new MarketController();
@@ -18,18 +20,16 @@ public class Market {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader standardInput = new BufferedReader(new InputStreamReader(System.in));
-
-             String received;
+             String received = reader.readLine();
              String toSend;
 
+             id = received;
+             
              while (true)
              {
                  received = reader.readLine();
-                 System.out.println(received);
-                 writer.println("i heard you");
                  toSend = marketController.parseAndEvaluate(received);
-                 System.out.println(toSend);
-
+                 writer.println(toSend);
              }
 
          } catch (UnknownHostException e) {

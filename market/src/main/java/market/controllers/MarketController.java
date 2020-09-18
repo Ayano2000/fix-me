@@ -21,6 +21,20 @@ public class MarketController {
 
     public MarketController() { }
 
+    public void printInventory()
+    {
+        for (Instrument instrument : instruments) {
+            System.out.println(instrument.toString());
+        }
+    }
+
+    public void printBrokers()
+    {
+        for (Broker broker : brokers) {
+            System.out.println(broker.toString());
+        }
+    }
+
     public String parseAndEvaluate(String message)
     {
         String messageToSend = "";
@@ -39,9 +53,9 @@ public class MarketController {
         String checksum = "";
 
         if (marketModel.purchaseStock(productID, brokerID, amount) == true) {
-            message = brokerID + "|" + amount + "|" + productID + " Accepted";
+            message = brokerID + "|" + amount + "|" + productID + "|Accepted";
         } else {
-            message = brokerID + "|" + amount + "|" + productID + " Rejected";
+            message = brokerID + "|" + amount + "|" + productID + "|Rejected";
         }
         checksum = messageHandler.createChecksum(message);
         message = message + "|" + checksum;
@@ -54,9 +68,9 @@ public class MarketController {
         String checksum = "";
 
         if (marketModel.sellBrokerStock(productID, brokerID, amount) == true) {
-            message = brokerID + ": sell order for " + amount + "product: " + productID + " Accepted";
+            message = brokerID + "|" + amount + "|" + productID + "|Accepted";
         } else {
-            message = brokerID + ": sell order for " + amount + "product: " + productID + " Rejected";
+            message = brokerID + "|" + amount + "|" + productID + "|Rejected";
         }
         checksum = messageHandler.createChecksum(message);
         message = message + "|" + checksum;
