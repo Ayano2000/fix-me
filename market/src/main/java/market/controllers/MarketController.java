@@ -19,40 +19,47 @@ public class MarketController {
     private MarketModel marketModel = new MarketModel(instruments, brokers);
     private MessageHandler messageHandler = new MessageHandler(instruments);
 
-    public MarketController() {
-        brokers.add(new Broker("Arata", 10000));
-        brokers.add(new Broker("Rigardt", 10000));
-        brokers.add(new Broker("Carah", 10000));
-        System.out.println("INSTRUMENTS:");
-        for (Instrument instrument : instruments) {
-            System.out.println(instrument.toString());
+    public MarketController() { }
+
+    public String parseAndEvaluate(String message)
+    {
+        String messageToSend = "";
+        String[] values = messageHandler.parse(message);
+        if (values[1].equalsIgnoreCase("buy")){
+            messageToSend = buyRequest(values[2], values[0], Integer.parseInt(values[3]));
+        } else if (values[1].equalsIgnoreCase("sell")) {
+            messageToSend = sellRequest(values[2], values[0], Integer.parseInt(values[3]));
         }
-        for (Broker broker : brokers) {
-            System.out.println(broker.toString());
-        }
+        return (messageToSend);
     }
 
     public String buyRequest(String productID, String brokerID, int amount)
     {
         String message = "";
+        String checksum = "";
 
         if (marketModel.purchaseStock(productID, brokerID, amount) == true) {
-            message = brokerID + ": buy order for " + amount + "product: " + productID + " Accepted";
+            message = brokerID + "|" + amount + "|" + productID + " Accepted";
         } else {
-            message = brokerID + ": buy order for " + amount + "product: " + productID + " Rejected";
+            message = brokerID + "|" + amount + "|" + productID + " Rejected";
         }
+        checksum = messageHandler.createChecksum(message);
+        message = message + "|" + checksum;
         return (message);
     }
 
     public String sellRequest(String productID, String brokerID, int amount)
     {
         String message = "";
+        String checksum = "";
 
         if (marketModel.sellBrokerStock(productID, brokerID, amount) == true) {
             message = brokerID + ": sell order for " + amount + "product: " + productID + " Accepted";
         } else {
             message = brokerID + ": sell order for " + amount + "product: " + productID + " Rejected";
         }
+        checksum = messageHandler.createChecksum(message);
+        message = message + "|" + checksum;
         return (message);
     }
 }
