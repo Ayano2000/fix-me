@@ -11,10 +11,11 @@ public class ServerThread extends Thread {
 	protected MessageHandler messageHandler = new MessageHandler();
 	private String brokerID;
 
-	public ServerThread(Socket brokerSocket, Socket marketSocket) {
+	public ServerThread(Socket brokerSocket, Socket marketSocket, String brokerID) {
 //		System.out.println(brokerSocket.getPort());
 		this.brokerSocket = brokerSocket;
 		this.marketSocket = marketSocket;
+		this.brokerID = brokerID;
 	}
 
 	public void run() {
@@ -23,7 +24,6 @@ public class ServerThread extends Thread {
 			PrintWriter marketOut = new PrintWriter(marketSocket.getOutputStream(), true);
 			BufferedReader brokerIn = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
 			BufferedReader marketIn = new BufferedReader(new InputStreamReader(marketSocket.getInputStream()));
-			brokerID = generateId();
 			brokerOut.println(brokerID);
 			String request, response;
 			while (true) {
@@ -31,7 +31,7 @@ public class ServerThread extends Thread {
 //				request = request.replaceFirst("buy", "sell"); // when want to test checksum validation
 				if (request.equalsIgnoreCase("Exit"))
 					break;
-				if (messageHandler.validateChecksum(request)) {
+				if (messageHandler.validateChecksum(request) && Router.validateID(request.split("\\|")[0])) {
 					marketOut.println(request);
 					response = marketIn.readLine();
 					brokerOut.println(response);
@@ -46,8 +46,6 @@ public class ServerThread extends Thread {
 		}
 	}
 
-	private String generateId() {
-		return "B" + brokerSocket.getPort();
-	}
+
 
 }

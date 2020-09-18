@@ -2,11 +2,14 @@ package main.java.router;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Router {
 
+	private static ArrayList<String> routingTable = new ArrayList<String>();
+
 	public static void main(String[] arg) throws InterruptedException {
-		boolean listening = true;
+
 		try {
 			//starts server sockets for brokers and market
 			ServerSocket brokerSocket = new ServerSocket(5000);
@@ -22,7 +25,10 @@ public class Router {
 						new PrintWriter(marketClientSocket.getOutputStream(), true).println("M"+marketClientSocket.getPort());
 						System.out.println("The Market is now open for business...");
 					}
-					new ServerThread(brokerSocket.accept(), marketClientSocket).start();
+					Socket broker = brokerSocket.accept();
+					String brokerID = generateID(broker);
+					routingTable.add(brokerID);
+					new ServerThread(broker, marketClientSocket, brokerID).start();
 				} catch (IOException e) {
 					throw e;
 				}
@@ -32,4 +38,10 @@ public class Router {
 			System.exit(1);
 		}
 	}
+
+	private static String generateID(Socket broker) {
+		return "B" + broker.getPort();
+	}
+
+	static boolean validateID(String id) { return routingTable.contains(id); }
 }

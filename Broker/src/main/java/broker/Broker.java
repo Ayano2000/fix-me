@@ -18,21 +18,17 @@ public class Broker {
 			System.out.println("Your order, please: \nExpected format: <buy/sell> <instrument> <amount>");
 			id = input.readLine();
 			while (true) {
-				try {
-					fromBroker = stdIn.readLine();
-					if (fromBroker.equalsIgnoreCase("exit"))
-						break;
-					if (validateInput(fromBroker)) {
-						output.println(parseMessage(fromBroker));
-						fromRouter = input.readLine();
-						if (fromRouter != null)
-							if (fromRouter.length() > 0)
-								System.out.println("Router: "+fromRouter);
-					} else {
-						System.out.println("Please check the format of your order and try again...");
-					}
-				} catch (IOException | NullPointerException e) {
-					throw e;
+				fromBroker = stdIn.readLine();
+				if (fromBroker.equalsIgnoreCase("exit"))
+					break;
+				if (validateInput(fromBroker)) {
+					output.println(parseMessage(fromBroker));
+					fromRouter = input.readLine();
+					if (fromRouter != null)
+						if (fromRouter.length() > 0)
+							System.out.println("Router: "+fromRouter);
+				} else {
+					System.out.println("Please check the format of your order and try again...");
 				}
 			}
 		} catch (IOException | NullPointerException e) {
