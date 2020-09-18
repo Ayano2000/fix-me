@@ -1,7 +1,6 @@
 package main.java.market.models;
 
 import main.java.market.interfaces.Instrument;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class MessageHandler {
         instruments = instrumentList;
     }
 
-    public String[] parse(@NotNull String message)
+    public String[] parse(String message)
     {
         String[] values = new String[4];
         values = message.split("[|]");
