@@ -33,9 +33,11 @@ public class Market {
              }
 
          } catch (UnknownHostException e) {
-             e.printStackTrace();
+            System.out.println("host name error");
+            e.printStackTrace();
          } catch (IOException e) {
-             e.printStackTrace();
+            System.out.println("Please start the router first");
+            e.printStackTrace();
          }
     }
 }
